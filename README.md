@@ -1,4 +1,4 @@
-#  WMI-Based APT Simulation & SIEM Detection Lab
+#  WMI Persistent-Based Simulation & SIEM Detection Lab
 
  **DISCLAIMER:** This project is intended solely for defensive research (Blue Team / Detection Engineering). All techniques are simulated in an isolated lab environment. Do not use for real-world attacks.
 

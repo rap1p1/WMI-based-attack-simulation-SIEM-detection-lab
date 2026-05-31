@@ -25,7 +25,7 @@ Windows 10 VM (Sysmon v15.15)
 
 ##  Lab Deployment Guide
 1. Prepare a Windows 10 VM + Elastic Agent Fleet + Sysmon
-2. Apply Sysmon config: `sysmon64.exe -c config/sysmon-config-v3.xml`
+2. Apply Sysmon config: `sysmon64.exe -c config/sysmon-config.xml`
 3. Edit `scripts/payload.ps1`: replace `<YOUR_TELEGRAM_BOT_TOKEN>` & `<YOUR_CHAT_ID>` with your credentials
 4. Run `scripts/setup.bat` with **standard user privileges**
 5. Open `notepad.exe` to trigger the WMI Consumer

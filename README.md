@@ -1,42 +1,47 @@
-# 🛡️ WMI-Based APT Simulation & SIEM Detection Lab
+#  WMI-Based APT Simulation & SIEM Detection Lab
 
-> ⚠️ **DISCLAIMER**: Dự án này chỉ phục vụ mục đích **nghiên cứu phòng thủ (Blue Team / Detection Engineering)**. Toàn bộ kỹ thuật được mô phỏng trong môi trường lab isolated. Không sử dụng cho mục đích tấn công thực tế.
+ **DISCLAIMER:** This project is intended solely for defensive research (Blue Team / Detection Engineering). All techniques are simulated in an isolated lab environment. Do not use for real-world attacks.
 
-## 📖 Tổng quan
-Mô phỏng chuỗi tấn công APT 7 phases trên Windows 10 sử dụng LOLBins, từ Initial Access (RAR encrypted) → UAC Bypass → WMI Persistence → Collection/Exfiltration → Cleanup. 
-Đồng thời xây dựng bộ **EQL Correlation Rules** trên Elastic SIEM để phát hiện toàn bộ chain dựa trên behavioral invariants.
+##  Overview
+Simulates a 7-phase APT attack chain on Windows 10 using Living-off-the-Land Binaries (LOLBins), spanning:
+`Initial Access (encrypted RAR)` → `UAC Bypass` → `WMI Persistence` → `Collection/Exfiltration` → `Cleanup`
 
-## ️ Kiến trúc
+Simultaneously builds a set of **EQL Correlation Rules** on Elastic SIEM to detect the entire chain based on behavioral invariants.
+
+## ️ Architecture
 Windows 10 VM (Sysmon v15.15)
 → Elastic Agent 9.x
 → Kibana SIEM (EQL Rules)
 → Webhook → Telegram Bot Alert
 
-## 📁 Cấu trúc thư mục
-| Thư mục | Mô tả |
-|---------|-------|
-| `scripts/` | `setup.bat` (UAC bypass), `payload.ps1` (WMI installer + exfil) |
-| `config/` | `sysmon-config-v3.xml` (Log source coverage) |
-| `phishing/` | `index.html` (Landing page giả mạo) |
-| `docs/` | Báo cáo kỹ thuật đầy đủ |
 
-## 🚀 Hướng dẫn triển khai (Lab)
-1. Chuẩn bị Windows 10 VM + Elastic Agent Fleet + Sysmon
-2. Áp dụng config: `sysmon64.exe -c config/sysmon-config-v3.xml`
-3. Chỉnh sửa `scripts/payload.ps1`: thay `<YOUR_TELEGRAM_BOT_TOKEN>` & `<YOUR_CHAT_ID>`
-4. Chạy `scripts/setup.bat` với quyền user thường
-5. Mở `notepad.exe` để trigger WMI Consumer
-6. Quan sát alert trên Kibana & Telegram
+##  Directory Structure
+| Directory | Description |
+|---|---|
+| `scripts/` | `setup.bat` (UAC bypass), `payload.ps1` (WMI installer + exfiltration) |
+| `config/` | `sysmon-config-v3.xml` (Log source coverage) |
+| `phishing/` | `index.html` (Phishing landing page) |
+| `docs/` | Full technical report |
+
+##  Lab Deployment Guide
+1. Prepare a Windows 10 VM + Elastic Agent Fleet + Sysmon
+2. Apply Sysmon config: `sysmon64.exe -c config/sysmon-config-v3.xml`
+3. Edit `scripts/payload.ps1`: replace `<YOUR_TELEGRAM_BOT_TOKEN>` & `<YOUR_CHAT_ID>` with your credentials
+4. Run `scripts/setup.bat` with **standard user privileges**
+5. Open `notepad.exe` to trigger the WMI Consumer
+6. Observe real-time alerts in Kibana & Telegram
 
 ##  Detection Rules
-- `C1`: UAC Bypass via Fodhelper (EID 13→1→1)
-- `C2`: WMI Persistence Chain (EID 19→20→21)
-- `C3`: WMI Consumer → Discovery (EID 1→1)
-- `C4`: Collection → Archive → Exfil (EID 11→11→3)
-- `C5`: Exfil → Indicator Removal (EID 3→23)
+| Rule | Technique | Sysmon Event Chain |
+|------|-----------|-------------------|
+| `C1` | UAC Bypass via Fodhelper | `EID 13 → 1 → 1` |
+| `C2` | WMI Persistence Chain | `EID 19 → 20 → 21` |
+| `C3` | WMI Consumer → Discovery | `EID 1 → 1` |
+| `C4` | Collection → Archive → Exfiltration | `EID 11 → 11 → 3` |
+| `C5` | Exfiltration → Indicator Removal | `EID 3 → 23` |
 
-## 📚 Tài liệu tham khảo
-- MITRE ATT&CK: T1548.002, T1546.003, T1041, T1070.004
-- Elastic EQL Documentation: https://www.elastic.co/guide/en/security/current/eql.html
-- Sysmon Official: https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
-- SigmaHQ Rules: https://github.com/SigmaHQ/sigma
+##  References
+- **MITRE ATT&CK**: T1548.002, T1546.003, T1041, T1070.004
+- **Elastic EQL Documentation**: https://www.elastic.co/guide/en/security/current/eql.html
+- **Sysmon Official**: https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+- **SigmaHQ Rules**: https://github.com/SigmaHQ/sigma

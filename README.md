@@ -3,7 +3,7 @@
  **DISCLAIMER:** This project is intended solely for defensive research (Blue Team / Detection Engineering). All techniques are simulated in an isolated lab environment. Do not use for real-world attacks.
 
 ##  Overview
-Simulates a 7-phase APT attack chain on Windows 10 using Living-off-the-Land Binaries (LOLBins), spanning:
+Simulates a 7-phase attack chain on Windows 10 using Living-off-the-Land Binaries (LOLBins), spanning:
 `Initial Access (encrypted RAR)` → `UAC Bypass` → `WMI Persistence` → `Collection/Exfiltration` → `Cleanup`
 
 Simultaneously builds a set of **EQL Correlation Rules** on Elastic SIEM to detect the entire chain based on behavioral invariants.

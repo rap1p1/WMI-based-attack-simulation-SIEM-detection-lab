@@ -1,0 +1,17 @@
+# Archive & temp files
+*.rar
+*.zip
+*.7z
+*.log
+*.tmp
+*.bak
+
+# Windows & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Sensitive placeholders
+payload.env
+*.ps1.history

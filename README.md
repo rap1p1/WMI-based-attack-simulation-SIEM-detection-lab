@@ -19,8 +19,8 @@ Windows 10 VM (Sysmon v15.15)
 | Directory | Description |
 |---|---|
 | `scripts/` | `setup.bat` (UAC bypass), `payload.ps1` (WMI installer + exfiltration) |
-| `config/` | `sysmon-config-v3.xml` (Log source coverage) |
-| `phishing/` | `index.html` (Phishing landing page) |
+| `config/` | `sysmon-config.xml` (Log source coverage) |
+| `phishing/` | `landing_page.html` (Phishing landing page) |
 | `docs/` | Full technical report |
 
 ##  Lab Deployment Guide

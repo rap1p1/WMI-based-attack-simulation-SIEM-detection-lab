@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  sysmon-config-v3.xml
-  WMI APT Detection Lab — Sysmon v15.15, Schema 4.90
-  Thay đổi so với v2:
-    - FileCreate: Bổ sung staging paths (Users\Public, ProgramData, AppData\Local\Temp)
-    - FileDelete: Bổ sung extensions (.docx, .xlsx, .pdf, .sql, .csv)
-    - DnsQuery (EventID 22): Bật mới — ghi nhận DNS lookups
-    - ProcessCreate: Giữ nguyên exclude conhost.exe
--->
 <Sysmon schemaversion="4.90">
   <HashAlgorithms>md5,sha256,imphash</HashAlgorithms>
   <CheckRevocation>False</CheckRevocation>
   <EventFiltering>
 
-    <!-- ProcessCreate (EventID 1): Log all, exclude noisy conhost -->
     <ProcessCreate onmatch="exclude">
       <Image condition="is">C:\Windows\System32\conhost.exe</Image>
     </ProcessCreate>
 
-    <!-- FileCreate (EventID 11): Staging paths + dangerous extensions
-         v3 CHANGE: Bổ sung \Users\Public\, \ProgramData\, \AppData\Local\Temp\ -->
     <FileCreate onmatch="include">
       <!-- Staging paths -->
       <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
@@ -37,20 +25,16 @@
       <TargetFilename condition="end with">.rar</TargetFilename>
     </FileCreate>
 
-    <!-- NetworkConnect (EventID 3): Log all outbound -->
     <NetworkConnect onmatch="exclude">
     </NetworkConnect>
 
-    <!-- RegistryEvent (EventID 12/13/14): Log all -->
     <RegistryEvent onmatch="exclude">
     </RegistryEvent>
 
-    <!-- WmiEvent (EventID 19/20/21): Log all -->
     <WmiEvent onmatch="exclude">
     </WmiEvent>
 
     <!-- FileDelete (EventID 23): Staging paths + sensitive extensions
-         v3 CHANGE: Bổ sung .docx, .xlsx, .pdf, .sql, .csv -->
     <FileDelete onmatch="include">
       <!-- Staging paths -->
       <TargetFilename condition="contains">\Temp\</TargetFilename>
@@ -69,9 +53,6 @@
       <TargetFilename condition="end with">.csv</TargetFilename>
     </FileDelete>
 
-    <!-- DnsQuery (EventID 22): NEW in v3
-         Ghi nhận DNS lookups — phát hiện C2 domain resolution
-         Exclude: common system DNS (Windows Update, CRL, OCSP) -->
     <DnsQuery onmatch="exclude">
       <QueryName condition="end with">.microsoft.com</QueryName>
       <QueryName condition="end with">.windows.com</QueryName>

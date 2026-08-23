@@ -9,7 +9,7 @@ A comprehensive detection engineering project simulating a multi-stage attack ch
 
 ## Overview
 
-Signature-based detection mechanisms frequently fail against attacks that exclusively utilize native operating system utilities. This project addresses that gap by simulating a sophisticated, multi-phase attack chain and engineering detection rules based on **behavioral invariants** — architectural constraints of the Windows operating system that attackers cannot alter without abandoning the technique.
+Signature-based detection mechanisms frequently fail against attacks that exclusively utilize native operating system utilities. This project addresses that gap by simulating a sophisticated, multi-phase attack chain and engineering detection rules based on **behavioral invariants** - architectural constraints of the Windows operating system that attackers cannot alter without abandoning the technique.
 
 The project demonstrates end-to-end detection engineering: from attack simulation and telemetry collection (Sysmon) to log normalization (ECS), EQL correlation rule development, and real-time alerting.
 
@@ -111,7 +111,7 @@ Standard operating procedure for SOC analysts responding to Critical severity al
 
 ### Phase 3: Investigation & Pivoting
 
-**Pivot 1 — Identify the initial execution vector:**
+**Pivot 1 - Identify the initial execution vector:**
 ```text
 process where
   winlog.event_id : "1" and
@@ -122,7 +122,7 @@ process where
 | head 10
 ```
 
-**Pivot 2 — Hunt for lateral movement or additional persistence:**
+**Pivot 2 - Hunt for lateral movement or additional persistence:**
 ```text
 any where
   host.name : "<affected_host>" and
@@ -132,7 +132,7 @@ any where
   )
 ```
 
-**Pivot 3 — Recover exfiltrated file hashes (post-cleanup):**
+**Pivot 3 - Recover exfiltrated file hashes (post-cleanup):**
 ```text
 file where
   winlog.event_id : "23" and

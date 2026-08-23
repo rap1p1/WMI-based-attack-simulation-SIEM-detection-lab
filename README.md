@@ -1,4 +1,3 @@
-```markdown
 # WMI Persistence Threat Simulation & ELK Detection Lab
 
 A comprehensive detection engineering project simulating a multi-stage attack chain using 100% Living-off-the-Land (LOLBins) techniques, paired with custom behavioral detection rules engineered in Elastic SIEM.
